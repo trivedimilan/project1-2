@@ -104,9 +104,13 @@ imatrix* init_rgb(imatrix* this, int width, int height, int channels){
     int i,j;
     this->width = width;
     this->height = height;
-    this->r = (uint8_t**)malloc(height * sizeof(uint8_t*));
-    this->g = (uint8_t**)malloc(height * sizeof(uint8_t*));
-    this->b = (uint8_t**)malloc(height * sizeof(uint8_t*));
+
+    //create a pointer to array of pointers
+    this->r = (uint8_t**)malloc(sizeof(uint8_t*)* height);
+    this->g = (uint8_t**)malloc(sizeof(uint8_t*)* height);
+    this->b = (uint8_t**)malloc(sizeof(uint8_t*)* height);
+
+    //for each ptr assign an array of size height
     for (i = 0; i < height; i++){
         this->r[i] = (uint8_t*)malloc(width * sizeof(uint8_t));
         this->g[i] = (uint8_t*)malloc(width * sizeof(uint8_t));
@@ -136,7 +140,7 @@ imatrix* set_rgb_image(imatrix* this, uint8_t* new_rgb_image, int height, int wi
 */
 imatrix* add(imatrix* m1, imatrix* m2){
 
-    if (m1->height != m2->height||m1->width != m2->width){
+    if ((m1->height != m2->height)||(m1->width != m2->width)){
     printf("Null");
     return NULL;
     }
